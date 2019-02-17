@@ -1,17 +1,13 @@
-// population of africa 1287269147
-const africaPop = 1_287_269_147;
+class Library {
+  titles: string[] = [];
 
-class AmountInput {
-  private static MAX_ALLOWED = 99_999_999
-  amount: number = 0
-
-  showTooltip(): void {
-    setTimeout((): void => {
-
-    }, 2_500)
-  }
-
-  formatMillion(): string {
-    return this.amount / 1_000_000 + 'M'
-  }
+  constructor(){}
 }
+
+const library = new Library();
+
+// sometime later & elsewhere in our codebase
+
+const shortTitles: string[] = library.titles.filter(
+  (title: string): boolean => title.length < 5
+)
