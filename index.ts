@@ -1,13 +1,21 @@
-class Library {
-  titles: string[] = [];
-
-  constructor(){}
+interface Admin {
+  id: string;
+  role: string;
 }
 
-const library = new Library();
+interface User {
+  email: string;
+}
 
-// sometime later & elsewhere in our codebase
+function redirect(user: Admin | User) {
+  // if (isAdmin(user)) {
+  if('role' in user) {
+    routeToAdminPage(user.role)
+  } else {
+    routeToHomePage(user.email)
+  }
+}
 
-const shortTitles: string[] = library.titles.filter(
-  (title: string): boolean => title.length < 5
-)
+// function isAdmin(user: Admin | User): user is Admin {
+//   return (<Admin>user).role !== undefined
+// }
