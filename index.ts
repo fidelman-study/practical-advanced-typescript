@@ -1,17 +1,18 @@
-const numbers: number[] = [2, 1]
-const someObject = {
-  id: 21,
-  name: 'John'
+function generateId(seed: number) {
+  return seed + '5'
 }
 
-const someBoolean: boolean = true
+type ReturnType<T> = T extends (...args: any[]) => infer R ? R : any
+type Id = ReturnType<typeof generateId>
 
-type Flatten<T> = T extends any
-  ? T[number]
-  : T extends object
-    ? T[keyof T]
-    : T
+lookupEntity(generateId(10))
 
-type NumbersArrayFlattened = Flatten<typeof numbers>
-type SomeObjectFlattened = Flatten<typeof someObject>
-type SomeBooleanFlattened = Flatten<typeof someBoolean>
+function lookupEntity(id: Id) {
+   
+}
+
+//////
+
+type UnpackPromise<T> = T extends Promise<infer K>[] ? K : any
+const arr = [Promise.resolve(true)]
+type ExpectedBoolean = UnpackPromise<typeof arr>
