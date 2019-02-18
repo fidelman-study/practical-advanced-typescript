@@ -1,76 +1,41 @@
-// type Pet = IDog | ICat
-
-interface IAnimal {
-  age: number
-  eat(): void
-  speak(): string
+interface TreeNode<T> {
+  value: T
+  left: TreeNode<T>
+  right: TreeNode<T>
 }
 
-type AnimalTypeAlias = {
-  age: number,
-  eat(): void,
-  speak(): string,
+interface LinkedListNode<T> {
+  value: T
+  next: LinkedListNode<T>
 }
 
-function feedAnimal(animal: IAnimal) {
-  animal.eat()
+let node: LinkedListNode<string>
+node.next.next.next.next.value
+
+///// Redux
+interface Action {
+  type: string
 }
 
-class Animal implements IAnimal {
-  age = 0
-
-  eat() {
-    console.log('nom..nom..')
-  }
-
-  speak() {
-    return 'woof'
-  }
+interface ListNode<T> {
+  value: T
+  next: ListNode<T>
+  prev: ListNode<T>
 }
 
-///// Similar ////
-type Eat = (food: string) => void
-type AnimalList = string[]
+let action1 = { type: 'LOGIN' }
+let action2 = { type: 'LOGIN_POSTS' }
 
-interface IEat {
-  (food: string): void
+let actionNode1: ListNode<Action> = {
+  value: action1,
+  next: null,
+  prev: null,
 }
 
-interface IAnimalList {
-  [index: number]: string
+let actionNode2: ListNode<Action> = {
+  value: action1,
+  next: null,
+  prev: actionNode1,
 }
 
-interface IPet {
-  pose(): void
-}
-
-interface IFeline {
-  nightvision: boolean
-}
-
-type Cat = IPet & IFeline
-interface ICat extends IPet, IFeline {
-}
-
-///// Diff //////
-type PetType = IDog | ICat
-interface IDog {}
-interface ICat {}
-interface IPet extends PetType {}
-class Pet implements PetType {}
-
-
-interface IFoo {
-  a: string
-}
-interface IFoo {
-  b: string
-}
-let foo: IFoo
-
-type Foo = {
-  a: string
-}
-type Foo = {
-  b: string
-}
+actionNode1.next = actionNode2
