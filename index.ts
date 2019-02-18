@@ -1,50 +1,23 @@
-interface Action {
-  type: string
-  payload?: string | number
+interface IPet {
+  name: string
+  age: number
+  park?: string
 }
 
-class Add implements Action {
-  readonly type = 'Add'
-  constructor(public payload: string) {}
+type ReadonlyPet = {
+  +readonly [K in keyof IPet]-?: IPet[K] // remove maybe props
 }
 
-class RemoveAll implements Action {
-  readonly type = 'Remove All'
+const pet: IPet = {
+  name: 'Buttons',
+  age: 5,
 }
 
-class RemoveOne implements Action {
-  readonly type = 'Remove One'
-  constructor(public payload: number) {}
+const readonlyPet: ReadonlyPet = {
+  name: 'Buttons',
+  age: 5,
+  park: 'Rigrac',
 }
 
-type TodoActions = Add | RemoveAll | RemoveOne
-
-interface ITodoState {
-  todos: string[]
-}
-
-function todoReduccer(
-  action: TodoActions,
-  state: ITodoState = { todos: [] }
-): ITodoState {
-  switch (action.type) {
-    case 'Add': {
-      return {
-        todos: [...state.todos, action.payload],
-      }
-    }
-    case 'Remove All': {
-      return {
-        todos: [],
-      }
-    }
-    case 'Remove One': {
-      return {
-        todos: [...state.todos].splice(action.payload, 1)
-      }
-    }
-    default: {
-      return state
-    }
-  }
-}
+pet.age = 6
+readonlyPet.age = 6
