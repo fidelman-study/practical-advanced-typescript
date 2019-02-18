@@ -1,45 +1,17 @@
-interface StringContainer {
-  value: string
-  format(): string
-  split(): string[]
+const numbers: number[] = [2, 1]
+const someObject = {
+  id: 21,
+  name: 'John'
 }
 
-interface NumberContainer {
-  value: number
-  nearestPrime: number
-  round(): number
-}
+const someBoolean: boolean = true
 
-type Item<T> = {
-  id: T
-  container: T extends string ? StringContainer : NumberContainer
-}
+type Flatten<T> = T extends any
+  ? T[number]
+  : T extends object
+    ? T[keyof T]
+    : T
 
-const item: Item<string> = {
-  id: 'asdad',
-  container: {
-    value: '123',
-    format: () => 'hi',
-    split: () => ['hi']
-  },
-}
-
-//////////////////////
-
-interface Book {
-  id: string
-  tableOfContents: string[]
-}
-
-interface Tv {
-  id: number
-  diagonal: number
-}
-
-interface IItemService {
-  getItem<T extends string | number>(id: T): T extends string ? Book : Tv
-}
-
-let itemService: IItemService;
-
-const book = itemService.getItem('10')
+type NumbersArrayFlattened = Flatten<typeof numbers>
+type SomeObjectFlattened = Flatten<typeof someObject>
+type SomeBooleanFlattened = Flatten<typeof someBoolean>
