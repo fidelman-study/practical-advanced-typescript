@@ -1,21 +1,50 @@
-interface Admin {
-  id: string;
-  role: string;
+interface Action {
+  type: string
+  payload?: string | number
 }
 
-interface User {
-  email: string;
+class Add implements Action {
+  readonly type = 'Add'
+  constructor(public payload: string) {}
 }
 
-function redirect(user: Admin | User) {
-  // if (isAdmin(user)) {
-  if('role' in user) {
-    routeToAdminPage(user.role)
-  } else {
-    routeToHomePage(user.email)
+class RemoveAll implements Action {
+  readonly type = 'Remove All'
+}
+
+class RemoveOne implements Action {
+  readonly type = 'Remove One'
+  constructor(public payload: number) {}
+}
+
+type TodoActions = Add | RemoveAll | RemoveOne
+
+interface ITodoState {
+  todos: string[]
+}
+
+function todoReduccer(
+  action: TodoActions,
+  state: ITodoState = { todos: [] }
+): ITodoState {
+  switch (action.type) {
+    case 'Add': {
+      return {
+        todos: [...state.todos, action.payload],
+      }
+    }
+    case 'Remove All': {
+      return {
+        todos: [],
+      }
+    }
+    case 'Remove One': {
+      return {
+        todos: [...state.todos].splice(action.payload, 1)
+      }
+    }
+    default: {
+      return state
+    }
   }
 }
-
-// function isAdmin(user: Admin | User): user is Admin {
-//   return (<Admin>user).role !== undefined
-// }
